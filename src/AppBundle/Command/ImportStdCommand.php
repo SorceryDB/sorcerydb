@@ -52,21 +52,6 @@ class ImportStdCommand extends ContainerAwareCommand
 
         $helper = $this->getHelper('question');
 
-        // sides
-
-        $output->writeln("Importing Sides...");
-        $sidesFileInfo = $this->getFileInfo($path, 'sides.json');
-        $imported = $this->importSidesJsonFile($sidesFileInfo);
-        if (!$force && count($imported)) {
-            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
-            if (!$helper->ask($input, $output, $question)) {
-                die();
-            }
-        }
-        $this->entityManager->flush();
-        $this->loadCollection('Side');
-        $output->writeln("Done.");
-
         // factions
 
         $output->writeln("Importing Factions...");
@@ -218,9 +203,7 @@ class ImportStdCommand extends ContainerAwareCommand
                 'name',
                 'color',
                 'is_mini',
-            ], [
-                'side_code',
-            ], []);
+            ], [], []);
             if ($faction) {
                 $result[] = $faction;
                 $this->entityManager->persist($faction);
@@ -241,9 +224,7 @@ class ImportStdCommand extends ContainerAwareCommand
                 'name',
                 'position',
                 'is_subtype',
-            ], [
-                'side_code',
-            ], []);
+            ],[], []);
             if ($type) {
                 $result[] = $type;
                 $this->entityManager->persist($type);
@@ -324,7 +305,6 @@ class ImportStdCommand extends ContainerAwareCommand
             ], [
                 'faction_code',
                 'pack_code',
-                'side_code',
                 'type_code',
             ], [
                 'illustrator',
@@ -374,7 +354,6 @@ class ImportStdCommand extends ContainerAwareCommand
                     if ($card->getType()->getCode() === 'identity') {
                         $prebuilt->setIdentity($card);
                         $prebuilt->setFaction($card->getFaction());
-                        $prebuilt->setSide($card->getFaction()->getSide());
                     }
                 }
             }
@@ -693,6 +672,18 @@ class ImportStdCommand extends ContainerAwareCommand
         }
     }
 
+    protected function importAvatarData(Card $card, array $data)
+    {
+        $mandatoryKeys = [
+            'health',
+            'power',
+        ];
+
+        foreach ($mandatoryKeys as $key) {
+            $this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, true);
+        }
+    }
+
     protected function importEventData(Card $card, array $data)
     {
         $mandatoryKeys = [
@@ -738,10 +729,6 @@ class ImportStdCommand extends ContainerAwareCommand
 
         if ($card->getPack()->getCode() !== 'draft') {
             $mandatoryKeys[] = 'influence_limit';
-        }
-
-        if ($card->getSide()->getCode() === 'runner') {
-            $mandatoryKeys[] = 'base_link';
         }
 
         foreach ($mandatoryKeys as $key) {

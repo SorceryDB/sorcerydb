@@ -39,11 +39,6 @@ class Faction implements NormalizableInterface, TimestampableInterface, CodeName
     private $decklists;
 
     /**
-     * @var Side
-     */
-    private $side;
-
-    /**
      * @var Collection
      */
     private $cards;
@@ -83,8 +78,7 @@ class Faction implements NormalizableInterface, TimestampableInterface, CodeName
                 'code' => $this->code,
                 'color' => $this->color,
                 'is_mini' => $this->isMini,
-                'name' => $this->name,
-                'side_code' => $this->side ? $this->side->getCode() : null
+                'name' => $this->name
         ];
     }
 
@@ -149,25 +143,6 @@ class Faction implements NormalizableInterface, TimestampableInterface, CodeName
     public function setIsMini(bool $isMini)
     {
         $this->isMini = $isMini;
-
-        return $this;
-    }
-
-    /**
-     * @return Side
-     */
-    public function getSide()
-    {
-        return $this->side;
-    }
-
-    /**
-     * @param Side $side
-     * @return $this
-     */
-    public function setSide(Side $side)
-    {
-        $this->side = $side;
 
         return $this;
     }

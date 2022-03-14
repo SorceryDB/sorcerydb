@@ -25,36 +25,29 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class BuilderController extends Controller
 {
     /**
-     * @param string                 $side_text
      * @param EntityManagerInterface $entityManager
      * @return Response
      *
      * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
      */
-    public function buildformAction(string $side_text, EntityManagerInterface $entityManager, CardsData $cardsData, LoggerInterface $logger)
+    public function buildformAction(EntityManagerInterface $entityManager, CardsData $cardsData, LoggerInterface $logger)
     {
         $response = new Response();
         $response->setPublic();
         $response->setMaxAge($this->getParameter('long_cache'));
 
-        $side = $entityManager->getRepository('AppBundle:Side')->findOneBy([
-            "name" => $side_text,
-        ]);
         $type = $entityManager->getRepository('AppBundle:Type')->findOneBy([
             "code" => "identity",
         ]);
 
         $identities = $entityManager->getRepository('AppBundle:Card')->findBy([
-            "side" => $side,
             "type" => $type,
         ], [
             "faction" => "ASC",
             "title"   => "ASC",
         ]);
 
-        $factions = $entityManager->getRepository('AppBundle:Faction')->findBy([
-            "side" => $side,
-        ], [
+        $factions = $entityManager->getRepository('AppBundle:Faction')->findBy([], [
             "name" => "ASC",
         ]);
 
@@ -117,8 +110,6 @@ class BuilderController extends Controller
             [
                 'pagetitle'           => "Deckbuilder",
                 'deck'                => [
-                    'side_name'   => mb_strtolower($card->getSide()
-                                                        ->getName()),
                     "slots"       => $arr,
                     "name"        => "New " . $card->getSide()
                                                    ->getName() . " Deck",
@@ -369,7 +360,7 @@ class BuilderController extends Controller
         }
 
         foreach ($meteor_data as $meteor_deck) {
-            // add a tag for side and faction of deck
+            // add a tag for faction of deck
             $identity_code = $glossary[$meteor_deck['identity']];
             /** @var Card $identity */
             $identity = $entityManager->getRepository('AppBundle:Card')->findOneBy(['code' => $identity_code]);
@@ -377,8 +368,7 @@ class BuilderController extends Controller
                 continue;
             }
             $faction_code = $identity->getFaction()->getCode();
-            $side_code = $identity->getSide()->getCode();
-            $tags = [$faction_code, $side_code];
+            $tags = [$faction_code];
 
             $content = [
                 $identity_code => 1,
@@ -749,11 +739,9 @@ class BuilderController extends Controller
               d.tags,
               u.id user_id,
               (SELECT count(*) FROM deckchange c WHERE c.deck_id=d.id AND c.saved=0) unsaved,
-              s.name side_name
             FROM deck d
               LEFT JOIN mwl m ON d.mwl_id=m.id
               LEFT JOIN user u ON d.user_id=u.id
-              LEFT JOIN side s ON d.side_id=s.id
             WHERE
               d.uuid = ?", [$deck_uuid])->fetchAll();
         $deck = $rows[0];
@@ -762,7 +750,6 @@ class BuilderController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $deck['side_name'] = mb_strtolower($deck['side_name']);
 
         $rows = $dbh->executeQuery("
             SELECT
@@ -950,14 +937,12 @@ class BuilderController extends Controller
               m.code,
               d.problem,
               d.date_update,
-              s.name side_name,
               c.code identity_code,
               f.code faction_code,
               CASE WHEN u.id=? THEN 1 ELSE 0 END is_owner
             FROM deck d
               LEFT JOIN mwl m  ON d.mwl_id=m.id
               LEFT JOIN user u ON d.user_id=u.id
-              LEFT JOIN side s ON d.side_id=s.id
               LEFT JOIN card c ON d.identity_id=c.id
               LEFT JOIN faction f ON c.faction_id=f.id
             WHERE (u.id=? OR u.share_decks=1) AND d.uuid = ?",
@@ -974,7 +959,6 @@ class BuilderController extends Controller
 
         $deck = $rows[0];
 
-        $deck['side_name'] = mb_strtolower($deck['side_name']);
 
         $rows = $dbh->executeQuery("
             SELECT

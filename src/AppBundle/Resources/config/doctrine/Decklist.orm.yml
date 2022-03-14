@@ -16,13 +16,6 @@ AppBundle\Entity\Decklist:
             joinColumn:
                 name: user_id
                 referencedColumnName: id
-        side:
-            targetEntity: Side
-            nullable: false
-            inversedBy: decklists
-            joinColumn:
-                name: side_id
-                referencedColumnName: id
         identity:
             targetEntity: Card
             nullable: false

@@ -690,11 +690,6 @@ class DecklistManager
             $packs = $dbh->executeQuery("SELECT id FROM pack")->fetchAll(\PDO::FETCH_COLUMN);
         }
 
-        if ($faction_code === "corp" || $faction_code === "runner") {
-            $side_code = $faction_code;
-            unset($faction_code);
-        }
-
         $joins = [];
         $wheres = [];
         $params = [];
@@ -734,11 +729,6 @@ class DecklistManager
                 . " HAVING COUNT(DISTINCT dls.card_id) = $group_by_count";
         }
 
-        if (!empty($side_code)) {
-            $wheres[] = 's.code=?';
-            $params[] = $side_code;
-            $types[] = \PDO::PARAM_STR;
-        }
         if (!empty($faction_code)) {
             $wheres[] = 'f.code=?';
             $params[] = $faction_code;
@@ -828,7 +818,6 @@ class DecklistManager
                 d.nbcomments
                 from decklist d
                 join user u on d.user_id=u.id
-                join side s on d.side_id=s.id
                 join card c on d.identity_id=c.id
                 join pack p on d.last_pack_id=p.id
                 join faction f on d.faction_id=f.id

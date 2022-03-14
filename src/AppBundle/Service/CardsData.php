@@ -223,13 +223,12 @@ class CardsData
 
         // Construction of the sql request
         $init = $this->entityManager->createQueryBuilder();
-        $qb = $init->select('c', 'p', 'y', 't', 'f', 's')
+        $qb = $init->select('c', 'p', 'y', 't', 'f')
            ->from(Card::class, 'c')
            ->leftJoin('c.pack', 'p')
            ->leftJoin('p.cycle', 'y')
            ->leftJoin('c.type', 't')
-           ->leftJoin('c.faction', 'f')
-           ->leftJoin('c.side', 's');
+           ->leftJoin('c.faction', 'f');
 
         $qb2 = null;
         $qb3 = null;
@@ -396,21 +395,6 @@ class CardsData
                                 $parameters[$i++] = "% $arg %";
                                 break;
                         }
-                    }
-                    $clauses[] = implode($operator == '!' ? " and " : " or ", $or);
-                    break;
-                case 'd': // side
-                    $or = [];
-                    foreach ($condition as $arg) {
-                        switch ($operator) {
-                            case ':':
-                                $or[] = "(SUBSTRING(s.code,1,1) = SUBSTRING(?$i,1,1))";
-                                break;
-                            case '!':
-                                $or[] = "(SUBSTRING(s.code,1,1) != SUBSTRING(?$i,1,1))";
-                                break;
-                        }
-                        $parameters[$i++] = $arg;
                     }
                     $clauses[] = implode($operator == '!' ? " and " : " or ", $or);
                     break;
@@ -733,10 +717,10 @@ class CardsData
                 $qb->orderBy('y.position')->addOrderBy('p.position')->addOrderBy('c.position');
                 break;
             case 'faction':
-                $qb->orderBy('c.side', 'DESC')->addOrderBy('c.faction')->addOrderBy('c.type');
+                $qb->addOrderBy('c.faction')->addOrderBy('c.type');
                 break;
             case 'type':
-                $qb->orderBy('c.side', 'DESC')->addOrderBy('c.type')->addOrderBy('c.faction');
+                $qb->addOrderBy('c.type')->addOrderBy('c.faction');
                 break;
             case 'cost':
                 $qb->orderBy('c.type')->addOrderBy('c.cost')->addOrderBy('c.advancementCost');
@@ -792,8 +776,6 @@ class CardsData
             "quantity"          => $card->getQuantity(),
             "pack_name"         => $card->getPack()->getName(),
             "pack_code"         => $card->getPack()->getCode(),
-            "side_name"         => $card->getSide()->getName(),
-            "side_code"         => $card->getSide()->getCode(),
             "strength"          => $card->getStrength(),
             "trash"             => $card->getTrashCost(),
             "uniqueness"        => $card->getUniqueness(),

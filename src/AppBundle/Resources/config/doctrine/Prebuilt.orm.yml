@@ -7,12 +7,6 @@ AppBundle\Entity\Prebuilt:
         prebuilt_position_index:
             columns: [ position ]
     manyToOne:
-        side:
-            targetEntity: Side
-            nullable: false
-            joinColumn:
-                name: side_id
-                referencedColumnName: id
         identity:
             targetEntity: Card
             nullable: false

@@ -153,11 +153,6 @@ class Card implements NormalizableInterface, TimestampableInterface
     private $faction;
 
     /**
-     * @var Side
-     */
-    private $side;
-
-    /**
      * @var string|null
      */
     private $imageUrl;
@@ -191,6 +186,16 @@ class Card implements NormalizableInterface, TimestampableInterface
      * @var bool
      */
     private $isRestricted;
+
+    /**
+     * @var int|null
+     */
+    private $health;
+
+    /**
+     * @var int|null
+     */
+    private $power;
 
     /**
      * Constructor
@@ -248,7 +253,6 @@ class Card implements NormalizableInterface, TimestampableInterface
         $externalFields = [
                 'faction',
                 'pack',
-                'side',
                 'type'
         ];
 
@@ -256,10 +260,9 @@ class Card implements NormalizableInterface, TimestampableInterface
             case 'identity':
                 $mandatoryFields[] = 'influence_limit';
                 $mandatoryFields[] = 'minimum_deck_size';
-                if ($this->side->getCode() === 'runner') {
-                    $mandatoryFields[] = 'base_link';
-                }
-                break;
+            case 'avatar':
+                $mandatoryFields[] = 'health';
+                $mandatoryFields[] = 'power';
             case 'agenda':
                 $mandatoryFields[] = 'advancement_cost';
                 $mandatoryFields[] = 'agenda_points';
@@ -890,25 +893,6 @@ class Card implements NormalizableInterface, TimestampableInterface
     }
 
     /**
-     * @return Side
-     */
-    public function getSide()
-    {
-        return $this->side;
-    }
-
-    /**
-     * @param Side $side
-     * @return $this
-     */
-    public function setSide(Side $side)
-    {
-        $this->side = $side;
-
-        return $this;
-    }
-
-    /**
      * @return Faction
      */
     public function getFaction()
@@ -1011,6 +995,44 @@ class Card implements NormalizableInterface, TimestampableInterface
     public function setIsRestricted(bool $isRestricted)
     {
         $this->isRestricted = $isRestricted;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getHealth()
+    {
+        return $this->health;
+    }
+
+    /**
+     * @param int|null $health
+     * @return $this
+     */
+    public function setHealth(int $health = null)
+    {
+        $this->health = $health;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPower()
+    {
+        return $this->power;
+    }
+
+    /**
+     * @param int|null $power
+     * @return $this
+     */
+    public function setPower(int $power = null)
+    {
+        $this->power = $power;
 
         return $this;
     }

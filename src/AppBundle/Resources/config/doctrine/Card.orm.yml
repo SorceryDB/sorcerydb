@@ -34,12 +34,6 @@ AppBundle\Entity\Card:
             joinColumn:
                 name: faction_id
                 referencedColumnName: id
-        side:
-            targetEntity: Side
-            inversedBy: cards
-            joinColumn:
-                name: side_id
-                referencedColumnName: id
     oneToMany:
         decklists:
             targetEntity: Decklist
@@ -103,6 +97,14 @@ AppBundle\Entity\Card:
         agendaPoints:
             type: smallint
             column: agenda_points
+            nullable: true
+        health:
+            type: smallint
+            column: health
+            nullable: true
+        power:
+            type: smallint
+            column: power
             nullable: true
         baseLink:
             type: smallint
