@@ -496,17 +496,51 @@ div.ad-blocked {
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav>li>a:hover {
   background: grey;
   color: black;
-  text-shadow: 0px 0px 5px #ccc;
+  text-shadow: 0px 0px 5px #000;
 }
-.navbar-brand .icon {
-  font-size: 120%;
+.navbar-brand .sorcery-icon {
+  font-size: 70%;
   line-height: 83%;
 }
-.navbar-brand:hover .icon-link-half-top {
-  color: brown;
+.navbar-brand {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 1fr 1fr;
+  grid-row-gap: 3px;
+  grid-template-areas:
+    "water earth text"
+    "wind fire text"
+
 }
-.navbar-brand:hover .icon-link-half-bottom {
-  color: mediumblue;
+.navbar-brand .icon-link-water {
+  grid-area: water;
+}
+.navbar-brand .icon-link-earth {
+  grid-area: earth;
+}
+.navbar-brand .icon-link-wind {
+  grid-area: wind;
+}
+.navbar-brand .icon-link-fire {
+  grid-area: fire;
+}
+.navbar-brand .sorcerydb-text {
+  grid-area: text;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar-brand:hover .icon-link-water {
+  color: #62cee3 !important;
+}
+.navbar-brand:hover .icon-link-earth {
+  color: #ad9b75 !important;
+}
+.navbar-brand:hover .icon-link-wind {
+  color: #a7b0d1 !important;
+}
+.navbar-brand:hover .icon-link-fire {
+  color: #f16116 !important;
 }
 
 #navbar-factions {

@@ -8,6 +8,16 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'sorcery';
+  src:  url('fonts/sorcery.eot?cmdd12');
+  src:  url('fonts/sorcery.eot?cmdd12#iefix') format('embedded-opentype'),
+    url('fonts/sorcery.ttf?cmdd12') format('truetype'),
+    url('fonts/sorcery.woff?cmdd12') format('woff'),
+    url('fonts/sorcery.svg?cmdd12#netrunner') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
@@ -22,6 +32,33 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.sorcery-icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'sorcery' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-link-water:after {
+  content: "\e901";
+}
+.icon-link-earth:after {
+  content: "\e902";
+}
+.icon-link-wind:after {
+  content: "\e903";
+}
+.icon-link-fire:after {
+  content: "\e904";
 }
 
 .icon-abr:before {
