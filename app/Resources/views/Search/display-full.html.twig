@@ -13,6 +13,7 @@
                   <h3 class="panel-title card-title">
                     {% if card.uniqueness == true %}&diams;{% endif %}
                     <a href="{{ card.url }}" class="card-title{% if card.available == false %} card-preview{% endif %}">{{ card.title }}</a>
+                    <span class="card-type-line" style="align-self: center;">{{ card.type_line }}</span>
                   </h3>
                   </div>
                 <div class="panel-body">

@@ -78,6 +78,14 @@ AppBundle\Entity\Card:
             type: string
             length: '1024'
             nullable: true
+        typeLine:
+            type: string
+            length: 255
+            nullable: true
+        strippedTypeLine:
+            type: string
+            length: '1024'
+            nullable: true
         keywords:
             type: string
             length: 255

@@ -312,6 +312,8 @@ class ImportStdCommand extends ContainerAwareCommand
                 'keywords',
                 'text',
                 'stripped_text',
+                'stripped_type_line',
+                'type_line',
                 'cost',
                 'faction_cost',
                 'trash_cost',

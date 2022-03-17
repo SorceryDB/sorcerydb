@@ -752,6 +752,7 @@ class CardsData
             "id"                => $card->getId(),
             "code"              => $card->getCode(),
             "title"             => $card->getTitle(),
+            "type_line"         => $card->getTypeLine(),
             "type_name"         => $card->getType()->getName(),
             "type_code"         => $card->getType()->getCode(),
             "subtype"           => $card->getKeywords(),

@@ -11,10 +11,15 @@ body {font-size:16px;font-family: 'LatoWeb', sans-serif;}
     position: relative;
     z-index: 10;
     margin-right: 15px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .card-cost {
     font-size: 125%;
+}
+.card-type-line {
+    font-size: 80%;
 }
 
 .card-text {

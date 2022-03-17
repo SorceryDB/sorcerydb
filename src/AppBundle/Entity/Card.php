@@ -38,6 +38,16 @@ class Card implements NormalizableInterface, TimestampableInterface
     private $strippedTitle;
 
     /**
+     * @var string
+     */
+    private $typeLine;
+
+    /**
+     * @var string
+     */
+    private $strippedTypeLine;
+
+    /**
      * @var string|null
      */
     private $keywords;
@@ -244,6 +254,8 @@ class Card implements NormalizableInterface, TimestampableInterface
                 'keywords',
                 'text',
                 'stripped_text',
+                'type_line',
+                'stripped_type_line',
                 'cost',
                 'faction_cost',
                 'trash_cost',
@@ -408,6 +420,44 @@ class Card implements NormalizableInterface, TimestampableInterface
     public function setStrippedTitle(string $title)
     {
         $this->strippedTitle = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTypeLine()
+    {
+        return $this->typeLine;
+    }
+
+    /**
+     * @param string|null $title
+     * @return $this
+     */
+    public function setTypeLine(string $typeLine = null)
+    {
+        $this->typeLine = $typeLine;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStrippedTypeLine()
+    {
+        return $this->strippedTypeLine;
+    }
+
+    /**
+     * @param string|null $typeLine
+     * @return $this
+     */
+    public function setStrippedTypeLine(string $typeLine = null)
+    {
+        $this->strippedTypeLine = $typeLine;
 
         return $this;
     }
@@ -1066,7 +1116,7 @@ class Card implements NormalizableInterface, TimestampableInterface
      */
     public function getLargeImagePath()
     {
-      return '/large/' . $this->code . '.jpg';
+      return '/large/' . $this->code . '.png';
     }
 
     /**
