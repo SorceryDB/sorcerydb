@@ -1,0 +1,42 @@
+AppBundle\Entity\Rarity:
+    type: entity
+    table: rarity
+    respositoryClass: AppBundle\Repository\RarityRepository
+    indexes:
+        name_index:
+            columns: [ name ]
+    oneToMany:
+        cards:
+            targetEntity: Card
+            mappedBy: type
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        code:
+            type: string
+            unique: true
+            length: 25
+        name:
+            type: string
+            length: 255
+        position:
+            type: integer
+            nullable: false
+        dateCreation:
+            type: datetime
+            nullable: false
+            column: date_creation
+            gedmo:
+                timestampable:
+                    on: create
+        dateUpdate:
+            type: datetime
+            nullable: false
+            column: date_update
+            gedmo:
+                timestampable:
+                    on: update
+    lifecycleCallbacks: {  }

@@ -82,6 +82,21 @@ class ImportStdCommand extends ContainerAwareCommand
         $this->loadCollection('Type');
         $output->writeln("Done.");
 
+        // rarity
+        $output->writeln("Importing Rarities...");
+        $raritiesFileInfo = $this->getFileInfo($path, 'rarities.json');
+        $imported = $this->importRaritiesJsonFile($raritiesFileInfo);
+        if (!$force && count ($imported)) {
+            $question = new ConfirmationQuestion("Do you confirm? (Y/n) ", true);
+            if (!$helper->ask($input, $output, $question)) {
+                die();
+            }
+        }
+        $this->entityManager->flush();
+        $this->loadCollection('Rarity');
+        $output->writeln("Done.");
+
+
         // cycles
 
         $output->writeln("Importing Cycles...");
@@ -234,6 +249,26 @@ class ImportStdCommand extends ContainerAwareCommand
         return $result;
     }
 
+    protected function importRaritiesJsonFile(\SplFileInfo $fileinfo)
+    {
+        $result = [];
+
+        $list = $this->getDataFromFile($fileinfo);
+        foreach ($list as $data) {
+            $rarity = $this->getEntityFromData('AppBundle\\Entity\\Rarity', $data, [
+                'code',
+                'name',
+                'position',
+            ],[], []);
+            if ($rarity) {
+                $result[] = $rarity;
+                $this->entityManager->persist($rarity);
+            }
+        }
+
+        return $result;
+    }
+
     protected function importCyclesJsonFile(\SplFileInfo $fileinfo)
     {
         $result = [];
@@ -294,6 +329,10 @@ class ImportStdCommand extends ContainerAwareCommand
 
         $cardsData = $this->getDataFromFile($fileinfo);
         foreach ($cardsData as $cardData) {
+            // shim in 'fixed' rarity for existing netrunner cards
+            if (!isset($cardData['rarity_code'])) {
+                $cardData['rarity_code'] = 'fixed';
+            }
             $card = $this->getEntityFromData('AppBundle\Entity\Card', $cardData, [
                 'code',
                 'deck_limit',
@@ -306,6 +345,7 @@ class ImportStdCommand extends ContainerAwareCommand
                 'faction_code',
                 'pack_code',
                 'type_code',
+                'rarity_code'
             ], [
                 'illustrator',
                 'flavor',
@@ -685,6 +725,17 @@ class ImportStdCommand extends ContainerAwareCommand
             $this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, true);
         }
     }
+
+    protected function importSiteData(Card $card, array $data)
+    {
+        $mandatoryKeys = [
+        ];
+
+        foreach ($mandatoryKeys as $key) {
+            $this->copyKeyToEntity($card, 'AppBundle\Entity\Card', $data, $key, true);
+        }
+    }
+
 
     protected function importEventData(Card $card, array $data)
     {

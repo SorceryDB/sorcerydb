@@ -53,6 +53,11 @@ class Card implements NormalizableInterface, TimestampableInterface
     private $keywords;
 
     /**
+     * @var string|null
+     */
+    private $nouns;
+
+    /**
      * @var string
      */
     private $text;
@@ -158,6 +163,12 @@ class Card implements NormalizableInterface, TimestampableInterface
     private $type;
 
     /**
+     * @var Rarity
+     */
+    private $rarity;
+
+
+    /**
      * @var Faction
      */
     private $faction;
@@ -252,6 +263,7 @@ class Card implements NormalizableInterface, TimestampableInterface
                 'illustrator',
                 'flavor',
                 'keywords',
+                'nouns',
                 'text',
                 'stripped_text',
                 'type_line',
@@ -265,7 +277,8 @@ class Card implements NormalizableInterface, TimestampableInterface
         $externalFields = [
                 'faction',
                 'pack',
-                'type'
+                'type',
+                'rarity'
         ];
 
         switch ($this->type->getCode()) {
@@ -477,6 +490,25 @@ class Card implements NormalizableInterface, TimestampableInterface
     public function setKeywords(string $keywords = null)
     {
         $this->keywords = $keywords;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNouns()
+    {
+        return $this->nouns;
+    }
+
+    /**
+     * @param string|null $nouns
+     * @return $this
+     */
+    public function setNouns(string $nouns = null)
+    {
+        $this->nouns = $nouns;
 
         return $this;
     }
@@ -938,6 +970,25 @@ class Card implements NormalizableInterface, TimestampableInterface
     public function setType(Type $type)
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Rarity
+     */
+    public function getRarity()
+    {
+        return $this->rarity;
+    }
+
+    /**
+     * @param Rarity $rarity
+     * @return $this
+     */
+    public function setRarity(Rarity $rarity)
+    {
+        $this->rarity = $rarity;
 
         return $this;
     }
