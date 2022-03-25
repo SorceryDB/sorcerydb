@@ -164,6 +164,21 @@ AppBundle\Entity\Card:
         strength:
             type: smallint
             nullable: true
+        thresholdGrantedEarth:
+            type: smallint
+            nullable: true
+        thresholdGrantedFire:
+            type: smallint
+            nullable: true
+        thresholdGrantedTotal:
+            type: smallint
+            nullable: true
+        thresholdGrantedWater:
+            type: smallint
+            nullable: true
+        thresholdGrantedWind:
+            type: smallint
+            nullable: true
         trashCost:
             type: smallint
             column: trash_cost

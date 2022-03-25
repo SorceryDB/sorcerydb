@@ -189,6 +189,30 @@ class Card implements NormalizableInterface, TimestampableInterface
     private $rulings;
 
     /**
+     * @var integer|null
+     */
+    private $thresholdGrantedEarth;
+
+    /**
+     * @var integer|null
+     */
+    private $thresholdGrantedFire;
+
+    /**
+     * @var integer|null
+     */
+    private $thresholdGrantedTotal;
+
+    /**
+     * @var integer|null
+     */
+    private $thresholdGrantedWater;
+    /**
+     * @var integer|null
+     */
+    private $thresholdGrantedWind;
+
+    /**
      * @var \DateTime
      */
     private $dateCreation;
@@ -317,6 +341,13 @@ class Card implements NormalizableInterface, TimestampableInterface
                 if (strstr($this->keywords, 'Icebreaker') !== false) {
                     $mandatoryFields[] = 'strength';
                 }
+                break;
+            case 'site':
+                $mandatoryFields[] = 'threshold_granted_earth';
+                $mandatoryFields[] = 'threshold_granted_fire';
+                $mandatoryFields[] = 'threshold_granted_total';
+                $mandatoryFields[] = 'threshold_granted_water';
+                $mandatoryFields[] = 'threshold_granted_wind';
                 break;
         }
 
@@ -989,6 +1020,101 @@ class Card implements NormalizableInterface, TimestampableInterface
     public function setRarity(Rarity $rarity)
     {
         $this->rarity = $rarity;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getThresholdGrantedEarth()
+    {
+        return $this->thresholdGrantedEarth;
+    }
+
+    /**
+     * @param int|null $thresholdGrantedEarth
+     * @return $this
+     */
+    public function setThresholdGrantedEarth(int $thresholdGrantedEarth = null)
+    {
+        $this->thresholdGrantedEarth = $thresholdGrantedEarth;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getThresholdGrantedFire()
+    {
+        return $this->thresholdGrantedFire;
+    }
+
+    /**
+     * @param int|null $thresholdGrantedFire
+     * @return $this
+     */
+    public function setThresholdGrantedFire(int $thresholdGrantedFire = null)
+    {
+        $this->thresholdGrantedFire = $thresholdGrantedFire;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getThresholdGrantedTotal()
+    {
+        return $this->thresholdGrantedTotal;
+    }
+
+    /**
+     * @param int|null $thresholdGrantedTotal
+     * @return $this
+     */
+    public function setThresholdGrantedTotal(int $thresholdGrantedTotal = null)
+    {
+        $this->thresholdGrantedTotal = $thresholdGrantedTotal;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getThresholdGrantedWater()
+    {
+        return $this->thresholdGrantedWater;
+    }
+
+    /**
+     * @param int|null $thresholdGrantedWater
+     * @return $this
+     */
+    public function setThresholdGrantedWater(int $thresholdGrantedWater = null)
+    {
+        $this->thresholdGrantedWater = $thresholdGrantedWater;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getThresholdGrantedWind()
+    {
+        return $this->thresholdGrantedWind;
+    }
+
+    /**
+     * @param int|null $thresholdGrantedWind
+     * @return $this
+     */
+    public function setThresholdGrantedWind(int $thresholdGrantedWind = null)
+    {
+        $this->thresholdGrantedWind = $thresholdGrantedWind;
 
         return $this;
     }

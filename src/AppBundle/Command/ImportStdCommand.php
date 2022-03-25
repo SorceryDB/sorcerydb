@@ -729,6 +729,11 @@ class ImportStdCommand extends ContainerAwareCommand
     protected function importSiteData(Card $card, array $data)
     {
         $mandatoryKeys = [
+            'threshold_granted_earth',
+            'threshold_granted_fire',
+            'threshold_granted_total',
+            'threshold_granted_water',
+            'threshold_granted_wind',
         ];
 
         foreach ($mandatoryKeys as $key) {
