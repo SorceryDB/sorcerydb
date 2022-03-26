@@ -128,8 +128,8 @@ class ModerationHelper
         );
         $this->logger->debug($body);
         $message = \Swift_Message::newInstance()
-                                ->setSubject("Your decklist on NetrunnerDB")
-                                ->setFrom("moderation@netrunnerdb.com", "NetrunnerDB Moderation Team")
+                                ->setSubject("Your decklist on SorceryDB")
+                                ->setFrom("moderation@sorcerydb.com", "SorceryDB Moderation Team")
                                 ->setTo($decklist->getUser()->getEmail())
                                 ->setBody($body, 'text/html');
 

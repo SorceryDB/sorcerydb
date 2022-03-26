@@ -302,7 +302,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   }
   function createFooter() {
     var date = new Date(decklist.date_creation);
-    return '<footer><p>Decklist published by <a href="https://netrunnerdb.com/en/profile/'+decklist.user_id+'">'+decklist.user_name+'</a> on <time datetime="'+date.toISOString()+'">'+date.toLocaleDateString()+'</time>. View it on <a href="'+url+'">NetrunnerDB</a>.</p></footer>';
+    return '<footer><p>Decklist published by <a href="https://netrunnerdb.com/en/profile/'+decklist.user_id+'">'+decklist.user_name+'</a> on <time datetime="'+date.toISOString()+'">'+date.toLocaleDateString()+'</time>. View it on <a href="'+url+'">SorceryDB</a>.</p></footer>';
   }
   function createHTML() {
     return Promise.all([createHeader(), createBody(), createFooter()])

@@ -25,8 +25,8 @@ function verify_command_dependency() {
 
 VERSION="v0.4.0 (2019-08-28)" # internal version of release script
 
-RELEASE_GH_USER=NetrunnerDB # upstream repo org or user owner
-RELEASE_GH_REPO=netrunnerdb # upstream repo name
+RELEASE_GH_USER=SorceryDB # upstream repo org or user owner
+RELEASE_GH_REPO=sorcerydb # upstream repo name
 RELEASE_BRANCH=main
 
 INTERACTIVE_MODE=true

@@ -576,8 +576,8 @@ class SocialController extends Controller
             ];
             foreach ($spool as $email => $view) {
                 $message = \Swift_Message::newInstance()
-                                         ->setSubject("[NetrunnerDB] New comment")
-                                         ->setFrom(["noreply@netrunnerdb.com" => $user->getUsername()])
+                                         ->setSubject("[SorceryDB] New comment")
+                                         ->setFrom(["noreply@sorcerydb.com" => $user->getUsername()])
                                          ->setTo($email)
                                          ->setBody($this->renderView($view, $email_data), 'text/html');
                 $mailer->send($message);

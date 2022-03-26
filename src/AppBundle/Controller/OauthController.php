@@ -40,7 +40,7 @@ class OauthController extends Controller
     }
 
     /**
-     * Display a page with "Connect to NetrunnerDB" button
+     * Display a page with "Connect to SorceryDB" button
      *
      * @Route("/initiate")
      * @Method("GET")

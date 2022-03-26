@@ -135,7 +135,7 @@ class SearchController extends Controller
         if (!$card instanceof Card) {
             throw $this->createNotFoundException();
         }
-        $meta = $card->getTitle() . ", a " . $card->getFaction()->getName() . " " . $card->getType()->getName() . " card for Android: Netrunner from the set " . $card->getPack()->getName() . " published by Fantasy Flight Games.";
+        $meta = $card->getTitle() . ", a " . $card->getFaction()->getName() . " " . $card->getType()->getName() . " card for Sorcery: Contested Realm from the set " . $card->getPack()->getName() . " published by Erik's Curiosa Limited.";
 
         return $this->forward(
             'AppBundle:Search:display',
@@ -167,9 +167,9 @@ class SearchController extends Controller
         if (!$pack instanceof Pack) {
             throw $this->createNotFoundException();
         }
-        $meta = $pack->getName() . ", a set of cards for Android: Netrunner"
+        $meta = $pack->getName() . ", a set of cards Sorcery: Contested Realm"
             . ($pack->getDateRelease() ? " published on " . $pack->getDateRelease()->format('Y/m/d') : "")
-            . " by Fantasy Flight Games.";
+            . " by Erik's Curiosa Limited.";
 
         // Find previous and next packs for navigation.
         $em = $entityManager->getRepository('AppBundle:Pack');
@@ -222,7 +222,7 @@ class SearchController extends Controller
         if (!$cycle instanceof Cycle) {
             throw $this->createNotFoundException();
         }
-        $meta = $cycle->getName() . ", a cycle of datapack for Android: Netrunner published by Fantasy Flight Games.";
+        $meta = $cycle->getName() . ", a release of cards published by Erik's Curiosa Limited.";
 
         return $this->forward(
             'AppBundle:Search:display',
